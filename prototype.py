@@ -2,6 +2,7 @@ import requests
 import urllib.parse
 import json
 from prettytable import PrettyTable
+import time
 
 # Set the URL of the endpoint
 url = "https://connectlive.cfl.ca/json/2023/stats/39.json"
@@ -20,11 +21,25 @@ players = json_data[0]["players"]
 
 # Create a table to display the player data
 table = PrettyTable()
-table.field_names = ["ID", "First Name", "Last Name", "Number", "Position"]
+table.field_names = ["ID", "First Name", "Last Name", "Number", "Position", "Blocked Kicks", "Losses", "Losses Yards", "Net Offence", "Passes Attempted", "Passes Rating", "Passes Sacked", "Passes Succeeded", "Passes Succeeded Yards", "Passes Succeeded Yards Longest", "Penalties Yds", "Rushes", "Rushing Yards", "Rushing Yards Average", "Rushing Yards Longest", "Total Defensive Plays", "Touchdowns Passes"]
 
-# Add each player to the table
+# Add each player and their stats to the table
 for player in players:
-    table.add_row([player["id"], player["firstName"], player["lastName"], player["number"], player["position"]])
+    # Create a dictionary to store the flattened stats
+    stats = {}
+
+    # Flatten the "stats" object and add it to the dictionary
+    for key, value in player["stats"].items():
+        stats[key] = value
+
+    # Add the player and their flattened stats to the table
+    table.add_row([player["id"], player["firstName"], player["lastName"], player["number"], player["position"], stats.get("blockedKicks", ""), stats.get("losses", ""), stats.get("lossesYards", ""), stats.get("netOffence", ""), stats.get("passesAttempted", ""), stats.get("passesRating", ""), stats.get("passesSacked", ""), stats.get("passesSucceeded", ""), stats.get("passesSucceededYards", ""), stats.get("passesSucceededYardsLongest", ""), stats.get("penaltiesYds", ""), stats.get("rushes", ""), stats.get("rushingYards", ""), stats.get("rushingYardsAverage", ""), stats.get("rushingYardsLongest", ""), stats.get("totalDefensivePlays", ""), stats.get("touchdownsPasses", "")])
 
 # Print the table
 print(table)
+
+
+# save the table as a csv file
+with open('cfl.csv', 'w') as f:
+    f.write(table.get_string())
+    f.close()
