@@ -1,1 +1,2 @@
 GAME_ID = 39
+HOME_SQUAD_ID = 6
