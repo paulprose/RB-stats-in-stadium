@@ -120,13 +120,13 @@ def get_away_rushing():
 @app.route('/HOME_RECEIVING', methods=['GET'])
 def get_home_receiving():
     """Route to get the top 3 receiving players on the home squad sorted by receiving yards."""
-    sorted_home_receiving = sorted(home_squad_data, key=lambda x: x['stats'].get('receivingYards', 0), reverse=True)[:3]
+    sorted_home_receiving = sorted(home_squad_data, key=lambda x: x['stats'].get('receptionsYards', 0), reverse=True)[:3]
     response_data = []
     for player in sorted_home_receiving:
         response_data.append({
             'FirstName': player['firstName'],
             'FastName': player['lastName'],
-            'receivingYards': player['stats'].get('receivingYards', 0),
+            'receivingYards': player['stats'].get('receptionsYards', 0),
             'receptions': player['stats'].get('receptions', 0),
         })
     return jsonify(response_data)
@@ -134,13 +134,13 @@ def get_home_receiving():
 @app.route('/AWAY_RECEIVING', methods=['GET'])
 def get_away_receiving():
     """Route to get the top 3 receiving players on the away squad sorted by receiving yards."""
-    sorted_away_receiving = sorted(away_squad_data, key=lambda x: x['stats'].get('receivingYards', 0), reverse=True)[:3]
+    sorted_away_receiving = sorted(away_squad_data, key=lambda x: x['stats'].get('receptionsYards', 0), reverse=True)[:3]
     response_data = []
     for player in sorted_away_receiving:
         response_data.append({
             'FirstName': player['firstName'],
             'FastName': player['lastName'],
-            'receivingYards': player['stats'].get('receivingYards', 0),
+            'receivingYards': player['stats'].get('receptionsYards', 0),
             'receptions': player['stats'].get('receptions', 0),
         })
     return jsonify(response_data)
