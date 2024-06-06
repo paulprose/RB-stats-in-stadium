@@ -18,7 +18,7 @@ def fetch_data():
     global home_squad_data
     global away_squad_data
     id_from_config = app.config['GAME_ID']
-    url = f"https://connectlive.cfl.ca/json/2023/stats/{id_from_config}.json"
+    url = f"https://connectlive.cfl.ca/json/2024/stats/{id_from_config}.json"
     
     while True:
         try:
@@ -66,7 +66,7 @@ def get_home_passing():
     for player in sorted_home_passing:
         response_data.append({
             'FirstName': player['firstName'],
-            'FastName': player['lastName'],
+            'LastName': player['lastName'],
             'passesSucceeded': player['stats'].get('passesSucceeded', 0),
             'passesSucceededYards': player['stats'].get('passesSucceededYards', 0),
             'passesAttempted': player['stats'].get('passesAttempted', 0),
@@ -81,7 +81,7 @@ def get_away_passing():
     for player in sorted_away_passing:
         response_data.append({
             'FirstName': player['firstName'],
-            'FastName': player['lastName'],
+            'LastName': player['lastName'],
             'passesSucceeded': player['stats'].get('passesSucceeded', 0),
             'passesSucceededYards': player['stats'].get('passesSucceededYards', 0),
             'passesAttempted': player['stats'].get('passesAttempted', 0),
@@ -97,7 +97,7 @@ def get_home_rushing():
     for player in sorted_home_rushing:
         response_data.append({
             'FirstName': player['firstName'],
-            'FastName': player['lastName'],
+            'LastName': player['lastName'],
             'rushingYards': player['stats'].get('rushingYards', 0),
             'rushes': player['stats'].get('rushes', 0),
         })
@@ -111,7 +111,7 @@ def get_away_rushing():
     for player in sorted_away_rushing:
         response_data.append({
             'FirstName': player['firstName'],
-            'FastName': player['lastName'],
+            'LastName': player['lastName'],
             'rushingYards': player['stats'].get('rushingYards', 0),
             'rushes': player['stats'].get('rushes', 0),
         })
@@ -125,7 +125,7 @@ def get_home_receiving():
     for player in sorted_home_receiving:
         response_data.append({
             'FirstName': player['firstName'],
-            'FastName': player['lastName'],
+            'LastName': player['lastName'],
             'receivingYards': player['stats'].get('receptionsYards', 0),
             'receptions': player['stats'].get('receptions', 0),
         })
@@ -139,7 +139,7 @@ def get_away_receiving():
     for player in sorted_away_receiving:
         response_data.append({
             'FirstName': player['firstName'],
-            'FastName': player['lastName'],
+            'LastName': player['lastName'],
             'receivingYards': player['stats'].get('receptionsYards', 0),
             'receptions': player['stats'].get('receptions', 0),
         })
@@ -153,7 +153,7 @@ def get_home_defence():
     for player in sorted_home_defence:
         response_data.append({
             'FirstName': player['firstName'],
-            'FastName': player['lastName'],
+            'LastName': player['lastName'],
             'tacklesSolo': player['stats'].get('tacklesSolo', 0)
         })
     return jsonify(response_data)
@@ -167,12 +167,13 @@ def get_away_defence():
     for player in sorted_away_defence:
         response_data.append({
             'FirstName': player['firstName'],
-            'FastName': player['lastName'],
+            'LastName': player['lastName'],
             'tacklesSolo': player['stats'].get('tacklesSolo', 0)
         })
     return jsonify(response_data)
 
 if __name__ == "__main__":
+    
     # Set up logging
     import logging
     logging.basicConfig(level=logging.INFO)
@@ -182,4 +183,4 @@ if __name__ == "__main__":
     daemon.start()
     
     # Run the Flask app
-    app.run(debug=False)  # Temporarily turn off debug mode for testing
+    app.run(debug=False, host='0.0.0.0', port=5000)  # Temporarily turn off debug mode for testing
